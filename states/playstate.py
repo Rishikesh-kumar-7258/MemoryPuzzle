@@ -5,7 +5,7 @@ from states.basestate import Base
 from classes.changer import Changer
 from functions import *
 
-class Start(Base):
+class Play(Base):
 
     def __init__(self):
         
@@ -13,7 +13,7 @@ class Start(Base):
         
 
     def render(self) :
-        Write(self.screen, "Memory Game", self.WINDOW_WIDTH // 2, self.WINDOW_HEIGHT // 2, size=110, center=True)
+        Write(self.screen, "Play", self.WINDOW_WIDTH // 2, self.WINDOW_HEIGHT // 2, size=110, center=True)
         self.changer.render()
 
     def update(self, params) :
@@ -27,6 +27,5 @@ class Start(Base):
         self.WINDOW_WIDTH = params['windowWidth']
         self.WINDOW_HEIGHT = params['windowHeight']
         self.changer = Changer(x=self.WINDOW_WIDTH // 2, y=self.WINDOW_HEIGHT//2 + 200, screen=self.screen)
-        self.changer.passed = params
         self.changer.actions = ["play"]
         self.changer.gameState = self.GAME_STATE

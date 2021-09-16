@@ -5,14 +5,14 @@ class GameStateMachine:
         self.current = {}
         self.states = states
 
-    def change(self, state, params={}):
+    def change(self, state, **params):
 
-        assert state in self.states
+        assert state in self.states , f"{state} not found in {self.states}"
 
-        self.current.leave()
+        if (self.current != {}) : self.current.leave()
         self.current = self.states[state]
-        self.current.enter(params)
+        self.current.enter(**params)
 
-    def update(self, params=None):
+    def update(self, params):
 
         self.current.update(params)

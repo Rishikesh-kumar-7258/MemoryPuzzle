@@ -1,6 +1,8 @@
 import pygame
 
 from gamestatemachine import GameStateMachine
+from states.startstate import Start
+from states.playstate import Play
 
 pygame.init()
 
@@ -15,11 +17,22 @@ COLORS = {
     "black" : (0, 0, 0),
 }
 
-# STATES
+STATES = {
+    "start" : Start(),
+    "play" : Play(),
+}
 
-GAME_STATE = GameStateMachine(states)
+GAME_STATE = GameStateMachine(STATES)
+GAME_STATE.change("start",
+                    screen = SCREEN,
+                    colors = COLORS,
+                    windowWidth=WINDOW_WIDTH,
+                    windowHeight=WINDOW_HEIGHT,
+                    gameState=GAME_STATE)
 
 GAME_OVER = False
+
+clock = pygame.time.Clock()
 
 while not GAME_OVER:
 
@@ -28,6 +41,11 @@ while not GAME_OVER:
 
         if event.type == pygame.QUIT:
             GAME_OVER = True
+    
+    SCREEN.fill(COLORS["black"])
+    GAME_STATE.update(events)
+    pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
 quit()
