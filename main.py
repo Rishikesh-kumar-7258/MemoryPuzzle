@@ -1,6 +1,8 @@
 import pygame
 
 from gamestatemachine import GameStateMachine
+
+from states.rulestate import Rules
 from states.startstate import Start
 from states.playstate import Play
 
@@ -15,11 +17,13 @@ pygame.display.set_caption("Memory Game")
 COLORS = {
     "white" : (255, 255, 255),
     "black" : (0, 0, 0),
+    'green' : (0, 255, 0)
 }
 
 STATES = {
     "start" : Start(),
     "play" : Play(),
+    "rules" : Rules()
 }
 
 GAME_STATE = GameStateMachine(STATES)
