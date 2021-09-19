@@ -11,13 +11,18 @@ class Play(Base):
     def __init__(self):
         
         # self.fliper = Fliper()    
-        pass
+        self.level = 1
+        self.blockCount = 2 + self.level
+        self.flipers = []
 
     def render(self) :
-        self.fliper.render()
-    def update(self, params) :
+        self.playspace = pygame.draw.rect(self.screen, (0, 0, 0), [190, 50, 600, 500])
+        for fliper in self.flipers:
+            fliper.render()
 
-        self.fliper.update()
+    def update(self, params) :
+        for fliper in self.flipers:
+            fliper.update()
         self.render()
 
     def enter(self, **params):
@@ -25,4 +30,11 @@ class Play(Base):
         self.screen = params['screen']
         self.WINDOW_WIDTH = params['windowWidth']
         self.WINDOW_HEIGHT = params['windowHeight']
-        self.fliper = Fliper(screen=self.screen, background=(255, 0, 0))
+        self.playspace = pygame.draw.rect(self.screen, (0, 0, 0), [190, 50, 600, 500])
+        for i in range(self.blockCount):
+            fliper = Fliper(screen=self.screen, background=(255, 0, 0))
+            fliper.width = 600 / self.blockCount
+            fliper.height = 500 / self.blockCount
+            fliper.x = 190 + (fliper.width * i)
+            fliper.y = 50
+            self.flipers.append(fliper)
