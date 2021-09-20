@@ -20,6 +20,10 @@ class Fliper:
 
     def render(self) : 
         box = pygame.draw.rect(self.screen, self.background, [self.x, self.y, self.width, self.height])
+        l1 = pygame.draw.line(self.screen, self.color, (self.x,self.y), (self.x+self.width, self.y))
+        l2 = pygame.draw.line(self.screen, self.color, (self.x,self.y), (self.x, self.y+self.height))
+        l3 = pygame.draw.line(self.screen, self.color, (self.x+self.width,self.y + self.width), (self.x+self.width, self.y))
+        l4 = pygame.draw.line(self.screen, self.color, (self.x+self.width,self.y + self.width), (self.x+self.width, self.y))
         if self.isflip : Write(self.screen, str(self.text), self.x + self.width // 2, self.y + self.height // 2, self.color, self.background, size=int(0.70*self.height), center=True)
 
     def update(self):
