@@ -1,4 +1,5 @@
 import pygame
+from pygame.constants import MOUSEBUTTONDOWN, MOUSEBUTTONUP
 
 from functions import Write
 
@@ -17,26 +18,21 @@ class Fliper:
         self.isflip = False
 
         box = pygame.draw.rect(self.screen, self.background, [self.x, self.y, self.width, self.height])
+    
+    def __eq__(self, o) -> bool:
+        if isinstance(o, Fliper): return (int(o.text) == int(self.text))
+        return False
 
     def render(self) : 
         box = pygame.draw.rect(self.screen, self.background, [self.x, self.y, self.width, self.height])
-        l1 = pygame.draw.line(self.screen, self.color, (self.x,self.y), (self.x+self.width, self.y))
-        l2 = pygame.draw.line(self.screen, self.color, (self.x,self.y), (self.x, self.y+self.height))
-        l3 = pygame.draw.line(self.screen, self.color, (self.x+self.width,self.y + self.width), (self.x+self.width, self.y))
-        l4 = pygame.draw.line(self.screen, self.color, (self.x+self.width,self.y + self.width), (self.x+self.width, self.y))
         if self.isflip : Write(self.screen, str(self.text), self.x + self.width // 2, self.y + self.height // 2, self.color, self.background, size=int(0.70*self.height), center=True)
 
-    def update(self):
-
-        if self.clicked() : self.flip()
-        self.render()
+    def update(self, params):
+        # self.render()
+        pass
 
     def clicked(self):
         x,y = pygame.mouse.get_pos()
         a, b, c = pygame.mouse.get_pressed()
 
-        return a and x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height
-    
-    def flip(self):
-
-        self.isflip = True
+        return  (x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height and a)
