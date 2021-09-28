@@ -18,6 +18,9 @@ class Play(Base):
         self.selected = 0
         self.current = None
         self.previous = None
+        self.score = 0
+
+        self.flipped = []
 
     def render(self) :
         self.playspace = pygame.draw.rect(self.screen, (50, 0, 0), [190, 50, 600, 500])
@@ -31,6 +34,8 @@ class Play(Base):
         pygame.draw.rect(tempbox, self.colors["green"], tempbox.get_rect(), 10)
 
         self.screen.blit(tempbox, (selectbox.x, selectbox.y))
+
+        Write(self.screen, f"Score : {self.score}", x=10, y=10, color=pygame.color.THECOLORS["skyblue"])
 
 
     def update(self, params) :
@@ -47,21 +52,29 @@ class Play(Base):
                     self.selected = self.selected + 4 if self.selected < (self.blockCount-1)*4 else self.selected
                 if event.key == pygame.K_SPACE:
 
-                    self.flipers[self.selected].isflip = True
+                    if (self.flipers[self.selected] not in self.flipped) : 
+                        self.flipers[self.selected].isflip = True
+                        
 
-                    if self.current != None:
-                        self.previous = self.current
-                        self.current = self.flipers[self.selected]
+                        if self.current != None:
+                            self.previous = self.current
+                            self.current = self.flipers[self.selected]
 
-                        if self.current != self.previous :
+                            if self.current != self.previous :
 
-                            pygame.time.wait(1000)
+                                self.current.isflip = False
+                                self.previous.isflip = False
 
-                            self.previous.isflip = False
-                            self.current.isflip = False
-                        self.previous = self.current = None
-                    else:
-                        self.current = self.flipers[self.selected]
+                            else:
+                                self.score += 10
+                                self.flipped.append(self.current)
+                                self.flipped.append(self.previous)
+
+                            self.previous = None
+                            self.current = None
+
+                        else:
+                            self.current = self.flipers[self.selected]
                 
         self.render()
 

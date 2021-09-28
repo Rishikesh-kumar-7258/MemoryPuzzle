@@ -31,7 +31,7 @@ class Fliper:
         # self.render()
         pass
 
-    def clicked(self):
+    def clicked(self) -> bool:
         x,y = pygame.mouse.get_pos()
         a, b, c = pygame.mouse.get_pressed()
 
