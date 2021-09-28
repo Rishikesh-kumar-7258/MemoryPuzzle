@@ -46,9 +46,22 @@ class Play(Base):
                 if event.key == pygame.K_DOWN:
                     self.selected = self.selected + 4 if self.selected < (self.blockCount-1)*4 else self.selected
                 if event.key == pygame.K_SPACE:
-                    self.current = self.flipers[self.selected]
-                    self.current.isflip = True
-                print(self.selected)
+
+                    self.flipers[self.selected].isflip = True
+
+                    if self.current != None:
+                        self.previous = self.current
+                        self.current = self.flipers[self.selected]
+
+                        if self.current != self.previous :
+
+                            pygame.time.wait(1000)
+
+                            self.previous.isflip = False
+                            self.current.isflip = False
+                        self.previous = self.current = None
+                    else:
+                        self.current = self.flipers[self.selected]
                 
         self.render()
 
