@@ -1,5 +1,6 @@
 import pygame
 from pygame.constants import KEYDOWN, SRCALPHA
+import time
 
 from states.basestate import Base
 
@@ -52,15 +53,15 @@ class Play(Base):
                     self.selected = self.selected + 4 if self.selected < (self.blockCount-1)*4 else self.selected
                 if event.key == pygame.K_SPACE:
 
-                    if (self.flipers[self.selected] not in self.flipped) : 
+                    if (self.flipers[self.selected] not in self.flipped) :
                         self.flipers[self.selected].isflip = True
-                        
 
                         if self.current != None:
                             self.previous = self.current
                             self.current = self.flipers[self.selected]
 
                             if self.current != self.previous :
+
 
                                 self.current.isflip = False
                                 self.previous.isflip = False
@@ -72,6 +73,7 @@ class Play(Base):
 
                             self.previous = None
                             self.current = None
+                            time.sleep(1)
 
                         else:
                             self.current = self.flipers[self.selected]
